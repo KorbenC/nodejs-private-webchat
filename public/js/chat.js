@@ -67,7 +67,7 @@ $(function(){
 				e.preventDefault();
 
 				name = $.trim(yourName.val());
-				
+
 				if(name.length < 1){
 					alert("Please enter a nick name longer than 1 character!");
 					return;
@@ -85,7 +85,7 @@ $(function(){
 					// call the server-side function 'login' and send user's parameters
 					socket.emit('login', {user: name, avatar: email, id: id});
 				}
-			
+
 			});
 		}
 
@@ -127,7 +127,7 @@ $(function(){
 
 	});
 
-	// Other useful 
+	// Other useful
 
 	socket.on('startChat', function(data){
 		if(data.boolean && data.id == id) {
@@ -261,6 +261,7 @@ $(function(){
 		if(status === "connected"){
 
 			section.children().css('display', 'none');
+			footer.css('display', 'none');
 			onConnect.fadeIn(1200);
 		}
 
@@ -277,6 +278,7 @@ $(function(){
 		else if(status === "personinchat"){
 
 			onConnect.css("display", "none");
+			footer.css('display', 'none');
 			personInside.fadeIn(1200);
 
 			chatNickname.text(data.user);
