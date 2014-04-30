@@ -11,7 +11,7 @@
     "chat",
     "system"
   ],
-  "author": "Nikolay Anastasov",
+  "author": "Korben Carreno",
   "license": "MIT",
   "dependencies": {
     "express": "~3.5.0",
