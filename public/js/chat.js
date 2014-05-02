@@ -184,6 +184,7 @@ $(function(){
 
 			createChatMessage(data.msg, data.user, data.img, moment());
 			scrollToBottom();
+			audioElement.play();
 	});
 
 	textarea.keypress(function(e){
