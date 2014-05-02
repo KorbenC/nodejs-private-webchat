@@ -44,6 +44,19 @@ $(function(){
 		noMessagesImage = $("#noMessagesImage");
 
 
+	// variable that creates audio
+  var audioElement = document.createElement('audio');
+  audioElement.setAttribute('src', 'https://dl.dropboxusercontent.com/u/18770429/new_gooogle_hangout.mp3');
+	//audioElement.load code above.
+	//if you take out :false from the code the file will auto play than everythin works the same after that()
+	audioElement.setAttribute('autoplay:false', 'autoplay');
+
+	$.get();
+  audioElement.addEventListener("load", function () {
+		audioElement.play();
+  }, true);
+
+
 	// on connection to server get the id of person's room
 	socket.on('connect', function(){
 
@@ -176,10 +189,12 @@ $(function(){
 	textarea.keypress(function(e){
 
 		// Submit the form on enter
-
-		if(e.which == 13) {
-			e.preventDefault();
-			chatForm.trigger('submit');
+		if(textarea.val() != ""){
+				if(e.which == 13) {
+					e.preventDefault();
+					chatForm.trigger('submit');
+					audioElement.play();
+				}
 		}
 
 	});
