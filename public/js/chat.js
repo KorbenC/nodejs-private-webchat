@@ -193,7 +193,6 @@ $(function(){
 				if(e.which == 13) {
 					e.preventDefault();
 					chatForm.trigger('submit');
-					audioElement.play();
 				}
 		}
 
@@ -215,6 +214,9 @@ $(function(){
 
 		// Empty the textarea
 		textarea.val("");
+
+		//play sound notification
+		audioElement.play();
 	});
 
 	// Update the relative time stamps on the chat messages every minute
