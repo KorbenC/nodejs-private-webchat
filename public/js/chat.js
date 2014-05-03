@@ -43,6 +43,11 @@ $(function(){
 		leftImage = $("#leftImage"),
 		noMessagesImage = $("#noMessagesImage");
 
+	//Variables for title change notification
+	var focused = true;
+	var baseTitle = window.document.title;
+	var chatsMissed = 0;
+
 
 	// variable that creates audio
   var audioElement = document.createElement('audio');
@@ -184,6 +189,7 @@ $(function(){
 
 			createChatMessage(data.msg, data.user, data.img, moment());
 			scrollToBottom();
+			countMissChats();
 			audioElement.play();
 	});
 
@@ -218,6 +224,31 @@ $(function(){
 
 		//play sound notification
 		audioElement.play();
+	});
+
+
+	//countMissChats
+	function countMissChats(){
+		if(socket.on('receive')){
+			if(!focused){
+				chatsMissed++;
+				window.document.title = "("+chatsMissed+")" + baseTitle;
+			}
+		}
+	}
+
+	//when the window is focused...
+	$(window).focus(function(){
+		focused = true;
+		setTimeout(function(){
+			document.title = baseTitle;
+		}, 100);
+		chatsMissed = 0;
+	});
+
+	//when the window is blurred...
+	$(window).blur(function(){
+		focused = false;
 	});
 
 	// Update the relative time stamps on the chat messages every minute
