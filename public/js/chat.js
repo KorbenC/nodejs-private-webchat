@@ -151,7 +151,8 @@ $(function(){
 	socket.on('startChat', function(data){
 		if(data.boolean && data.id == id) {
 
-			chats.empty();
+			// don't clear chat when new user connects
+			// chats.empty();
 
 			if(name === data.users[0]) {
 
@@ -170,8 +171,10 @@ $(function(){
 
 		if(data.boolean && id==data.room){
 
-			showMessage("somebodyLeft", data);
-			chats.empty();
+			// showMessage("somebodyLeft", data);
+
+			// don't clear chat when user leave
+			// chats.empty();
 		}
 
 	});

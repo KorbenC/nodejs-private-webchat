@@ -6,6 +6,9 @@
 
 var gravatar = require('gravatar');
 
+var usernames = [],
+	avatars = [];
+
 // Export a function, so that we can pass 
 // the app and io instances from the app.js file:
 
@@ -90,17 +93,17 @@ module.exports = function(app,io){
 				if(chat.clients(data.id).length <= 20) {
 					console.log(`load ${chat.clients(data.id).length} users`);
 
-					var usernames = [],
-						avatars = [];
+					// var usernames = [],
+					// 	avatars = [];
 
 					// add last connected user
-					// usernames.push(chat.clients(data.id))[chat.clients(data.id).length - 1].username;
-					// avatars.push(chat.clients(data.id))[chat.clients(data.id).length - 1].avatar;
+					usernames.push(chat.clients(data.id)[chat.clients(data.id).length - 1].username);
+					avatars.push(chat.clients(data.id)[chat.clients(data.id).length - 1].avatar);
 
-					chat.clients(data.id).forEach(client => {
-						usernames.push(client.username);
-						avatars.push(client.avatar);
-					});
+					// chat.clients(data.id).forEach(client => {
+					// 	usernames.push(client.username);
+					// 	avatars.push(client.avatar);
+					// });
 
 					// usernames.push(chat.clients(data.id)[0].username);
 					// usernames.push(chat.clients(data.id)[1].username);
