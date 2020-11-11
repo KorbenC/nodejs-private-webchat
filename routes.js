@@ -44,16 +44,22 @@ module.exports = function(app,io){
 
 				socket.emit('peopleinchat', {number: 0});
 			}
-			else if(chat.clients(data).length === 1) {
+			else if(chat.clients(data).length <= 20) {
 
+				let users;
+				chat.clients(data).forEach(client => {
+					users =+ client.username
+				});
 				socket.emit('peopleinchat', {
-					number: 1,
-					user: chat.clients(data)[0].username,
-					avatar: chat.clients(data)[0].avatar,
+					number: chat.clients(data).length,
+					user: users,
+					// number: 1,
+					// user: chat.clients(data)[0].username,
+					// avatar: chat.clients(data)[0].avatar,
 					id: data
 				});
 			}
-			else if(chat.clients(data).length >= 2) {
+			else if(chat.clients(data).length > 20) {
 
 				chat.emit('tooMany', {boolean: true});
 			}
@@ -62,9 +68,10 @@ module.exports = function(app,io){
 		// When the client emits 'login', save his name and avatar,
 		// and add them to the room
 		socket.on('login', function(data) {
+			console.log(data);
 
 			// Only two people per room are allowed
-			if(chat.clients(data.id).length < 2){
+			if(chat.clients(data.id).length <= 20){
 
 				// Use the socket object to store data. Each client gets
 				// their own unique socket object
@@ -80,16 +87,26 @@ module.exports = function(app,io){
 				// Add the client to the room
 				socket.join(data.id);
 
-				if(chat.clients(data.id).length == 2) {
+				if(chat.clients(data.id).length <= 20) {
+					console.log(`load ${chat.clients(data.id).length} users`);
 
 					var usernames = [],
 						avatars = [];
 
-					usernames.push(chat.clients(data.id)[0].username);
-					usernames.push(chat.clients(data.id)[1].username);
+					// add last connected user
+					// usernames.push(chat.clients(data.id))[chat.clients(data.id).length - 1].username;
+					// avatars.push(chat.clients(data.id))[chat.clients(data.id).length - 1].avatar;
 
-					avatars.push(chat.clients(data.id)[0].avatar);
-					avatars.push(chat.clients(data.id)[1].avatar);
+					chat.clients(data.id).forEach(client => {
+						usernames.push(client.username);
+						avatars.push(client.avatar);
+					});
+
+					// usernames.push(chat.clients(data.id)[0].username);
+					// usernames.push(chat.clients(data.id)[1].username);
+
+					// avatars.push(chat.clients(data.id)[0].avatar);
+					// avatars.push(chat.clients(data.id)[1].avatar);
 
 					// Send the startChat event to all the people in the
 					// room, along with a list of people that are in it.

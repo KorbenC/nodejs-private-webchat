@@ -51,7 +51,7 @@ $(function(){
 
 	// variable that creates audio
   var audioElement = document.createElement('audio');
-  audioElement.setAttribute('src', 'https://dl.dropboxusercontent.com/u/18770429/new_gooogle_hangout.mp3');
+  audioElement.setAttribute('src', '../sound/new_gooogle_hangout.mp3');
 	//audioElement.load code above.
 	//if you take out :false from the code the file will auto play than everythin works the same after that()
 	audioElement.setAttribute('autoplay:false', 'autoplay');
@@ -75,6 +75,7 @@ $(function(){
 
 	// receive the names and avatars of all people in the chat room
 	socket.on('peopleinchat', function(data){
+		console.log(`number: ${data.number}`);
 
 		if(data.number === 0){
 
@@ -107,7 +108,7 @@ $(function(){
 			});
 		}
 
-		else if(data.number === 1) {
+		else if(data.number <= 20) {
 
 			showMessage("personinchat",data);
 
@@ -186,6 +187,7 @@ $(function(){
 	socket.on('receive', function(data){
 
 			showMessage('chatStarted');
+			console.log(`user: ${data.user}, img: ${data.img}`);
 
 			createChatMessage(data.msg, data.user, data.img, moment());
 			scrollToBottom();
@@ -331,7 +333,7 @@ $(function(){
 			personInside.fadeIn(1200);
 
 			chatNickname.text(data.user);
-			ownerImage.attr("src",data.avatar);
+			// ownerImage.attr("src",data.avatar);
 		}
 
 		else if(status === "youStartedChatWithNoMessages") {
